@@ -1,14 +1,11 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="research">
+    <h1>This is the research page</h1>
   </div>
 </template>
-
 <script>
-// @ is an alias to /src
-
 export default {
-  name: "about",
+  name: "research",
   props: {
     msg: String
   }
