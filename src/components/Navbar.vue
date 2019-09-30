@@ -19,9 +19,11 @@
         <v-btn icon>
           <v-icon>mdi-export-variant</v-icon>
         </v-btn>
-        <v-btn icon>
-          <v-icon>mdi-account-circle</v-icon>
-        </v-btn>
+        <router-link :to="loginlink.route" tag="v-btn">
+          <v-btn icon>
+            <v-icon>mdi-account-circle</v-icon>
+          </v-btn>
+        </router-link>
       </template>
     </v-app-bar>
   </div>
@@ -33,6 +35,7 @@ export default {
   data() {
     return {
       titlelink: { text: "CryptoPlay", route: "/" },
+      loginlink: { route: "/login" },
       links: [
         { text: "About", route: "/about" },
         { text: "Research", route: "/research" },

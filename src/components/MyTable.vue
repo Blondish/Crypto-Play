@@ -1,60 +1,85 @@
 <template>
   <div>
-    <v-data-table :headers="headers" :items="tabledata" :items-per-page="10" class="elevation-1"></v-data-table>
-    <CryptoItem />
+    <v-data-table
+      :headers="headers"
+      @click:row="getCrypto"
+      :items="fixedDecimals"
+      :items-per-page="10"
+      :mobile-breakpoint="0"
+      class="elevation-1"
+    ></v-data-table>
   </div>
 </template>
 
 <script>
-import CryptoItem from "@/components/CryptoItem.vue";
+import axios from "axios";
 
 export default {
   name: "MyTable",
-  components: { CryptoItem },
+
   data() {
     return {
       headers: [
+        { text: "Rank", value: "cmc_rank" },
         {
           text: "Name",
-          align: "center",
           sortable: false,
           value: "name"
         },
-        { text: "Symbol", value: "symbol" },
+        { text: "Symbol", value: "symbol", sortable: false },
         { text: "Price", value: "quote[USD][price]" },
         { text: "% Change", value: "quote[USD][percent_change_24h]" },
-        { text: "Supply", value: "max_supply" },
-        { text: "Market Cap", value: "quote[USD][market_cap]" }
+
+        { text: "Market Cap", value: "quote[USD][market_cap]", sortable: false }
       ],
-      tabledata: [
-        {
-          id: 1,
-          name: "Bitcoin",
-          symbol: "BTC",
-          slug: "bitcoin",
-          num_market_pairs: 8051,
-          date_added: "2013-04-28T00:00:00.000Z",
-          tags: ["mineable"],
-          max_supply: 21000000,
-          circulating_supply: 17943062,
-          total_supply: 17943062,
-          platform: null,
-          cmc_rank: 1,
-          last_updated: "2019-09-18T13:20:34.000Z",
-          quote: {
-            USD: {
-              price: 10238.5773417,
-              volume_24h: 16454219061.202,
-              percent_change_1h: 0.301334,
-              percent_change_24h: -0.0195354,
-              percent_change_7d: 1.53376,
-              market_cap: 183711428033.91827,
-              last_updated: "2019-09-18T13:20:34.000Z"
+      tabledata: []
+    };
+  },
+  methods: {
+    getCrypto(item) {
+      console.log(item.id);
+      this.$router.replace("/cryptoitem/" + item.id);
+    },
+    getData() {
+      const proxyurl = "https://cors-anywhere.herokuapp.com/";
+      axios
+        .get(
+          proxyurl +
+            "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
+          {
+            headers: {
+              "X-CMC_PRO_API_KEY": "e1eb1f30-5c4e-43aa-be04-4b50df00807a"
             }
           }
-        }
-      ]
-    };
+        )
+        .then(response => {
+          console.log(response);
+          this.tabledata = response.data.data;
+        })
+        .catch(function(err) {
+          console.log(err);
+        });
+    }
+  },
+  computed: {
+    fixedDecimals() {
+      let newData = Array.from(this.tabledata);
+      for (var i = 0; i < this.tabledata.length; i++) {
+        newData[i].quote.USD.price = this.tabledata[i].quote.USD.price.toFixed(
+          2
+        );
+        newData[i].quote.USD.percent_change_24h = this.tabledata[
+          i
+        ].quote.USD.percent_change_24h.toFixed(2);
+
+        newData[i].quote.USD.market_cap =
+          this.tabledata[i].quote.USD.market_cap.toString().slice(0, 3) + "B";
+      }
+      return newData;
+    }
+  },
+  created() {
+    this.getData();
   }
 };
 </script>

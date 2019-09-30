@@ -5,6 +5,7 @@ import About from "./views/About.vue";
 import Research from "./views/Research.vue";
 import Contact from "./views/Contact.vue";
 import LogIn from "./views/LogIn.vue";
+import CryptoItem from "./views/CryptoItem.vue";
 
 Vue.use(Router);
 
@@ -16,6 +17,12 @@ export default new Router({
       path: "/",
       name: "home",
       component: Home
+    },
+    {
+      path: "/cryptoitem/:id",
+      component: CryptoItem,
+      name: "cryptoitem",
+      props: true
     },
     {
       path: "/about",
