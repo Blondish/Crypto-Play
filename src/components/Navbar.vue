@@ -10,15 +10,18 @@
       </v-toolbar-title>
 
       <div class="flex-grow-1"></div>
-
-      <v-toolbar-items v-for="link in links" :key="link.text">
-        <v-btn :to="link.route" text>{{link.text}}</v-btn>
-      </v-toolbar-items>
+      <template>
+        <v-toolbar-items class="hidden-xs-only" v-for="(link, index) in links" :key="index">
+          <v-btn :to="link.route" text>{{link.text}}</v-btn>
+        </v-toolbar-items>
+        <v-toolbar-items class="hidden-sm-and-up" v-for="link in links" :key="link.text">
+          <v-btn :to="link.route" icon>
+            <v-icon>{{ link.icon}}</v-icon>
+          </v-btn>
+        </v-toolbar-items>
+      </template>
       <div class="flex-grow-1"></div>
-      <template v-if="$vuetify.breakpoint.smAndUp">
-        <v-btn icon>
-          <v-icon>mdi-export-variant</v-icon>
-        </v-btn>
+      <template>
         <router-link :to="loginlink.route" tag="v-btn">
           <v-btn icon>
             <v-icon>mdi-account-circle</v-icon>
@@ -37,9 +40,9 @@ export default {
       titlelink: { text: "CryptoPlay", route: "/" },
       loginlink: { route: "/login" },
       links: [
-        { text: "About", route: "/about" },
-        { text: "Research", route: "/research" },
-        { text: "Contact", route: "/contact" }
+        { text: "About", route: "/about", icon: "mdi-information" },
+        { text: "Chat", route: "/chat", icon: "mdi-chat-processing" },
+        { text: "Contact", route: "/contact", icon: "mdi-phone" }
       ]
     };
   }
@@ -51,5 +54,10 @@ export default {
 img {
   width: 100px;
   height: 50px;
+}
+>>> .v-btn__content {
+  font-weight: 800;
+  font-size: 1.2em;
+  font-stretch: expanded;
 }
 </style>

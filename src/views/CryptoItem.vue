@@ -10,8 +10,8 @@
           </router-link>
         </v-col>
         <v-col xs-8>
-          <div v-if="cryptodata.data">{{cryptodata.data[id].name}}</div>
-          <div v-if="cryptodata.data">{{cryptodata.data[id].symbol}}</div>
+          <div class="title" v-if="cryptodata.data">{{cryptodata.data[id].name}}</div>
+          <div class="title" v-if="cryptodata.data">{{cryptodata.data[id].symbol}}</div>
           <img v-if="cryptodata.data" v-bind:src="cryptodata.data[id].logo" />
         </v-col>
         <v-col xs-2>
@@ -28,7 +28,53 @@
 
       <v-row>
         <v-col xs-12>
-          <div v-if="cryptodata.data">{{cryptodata.data[id].name}}</div>
+          <div
+            class="font-weight-bold"
+            v-if="cryptoFromTable"
+          >$ {{ cryptoFromTable.quote.USD.price }}</div>
+        </v-col>
+      </v-row>
+      <MyChart
+        v-if="cryptodata.data && cryptoFromTable.quote"
+        :cryptodata="cryptodata"
+        :id="id"
+        :cryptoFromTable="cryptoFromTable"
+      />
+
+      <v-row>
+        <v-col xs-12>
+          <div v-if="cryptodata.data">{{cryptodata.data[id].description}}</div>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col>
+          <h4>
+            For more information on
+            <span>{{cryptodata.data[id].name}}</span> please refer to below links
+          </h4>
+        </v-col>
+      </v-row>
+      <v-row>
+        <v-col xs-4>
+          <a
+            v-if="cryptodata.data"
+            v-bind:href="cryptodata.data[id].urls.website"
+            target="_blank"
+          >Website</a>
+        </v-col>
+        <v-col xs-4>
+          <a
+            v-if="cryptodata.data"
+            v-bind:href="cryptodata.data[id].urls.reddit"
+            target="_blank"
+          >Reddit Page</a>
+        </v-col>
+        <v-col xs-4>
+          <a
+            v-if="cryptodata.data"
+            v-bind:href="cryptodata.data[id].urls.twitter"
+            target="_blank"
+          >Twitter Page</a>
         </v-col>
       </v-row>
     </v-container>
@@ -37,9 +83,11 @@
 
 <script>
 import axios from "axios";
+import MyChart from "./MyChart";
 
 export default {
   props: ["id"],
+  components: { MyChart },
 
   data() {
     return {
@@ -102,5 +150,9 @@ export default {
 <style scoped>
 select {
   border: none;
+}
+a {
+  text-decoration: none;
+  color: red;
 }
 </style>

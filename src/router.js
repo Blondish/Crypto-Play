@@ -2,7 +2,7 @@ import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
 import About from "./views/About.vue";
-import Research from "./views/Research.vue";
+import Chat from "./views/Chat.vue";
 import Contact from "./views/Contact.vue";
 import LogIn from "./views/LogIn.vue";
 import CryptoItem from "./views/CryptoItem.vue";
@@ -30,9 +30,9 @@ export default new Router({
       component: About
     },
     {
-      path: "/research",
-      name: "research",
-      component: Research
+      path: "/chat",
+      name: "chat",
+      component: Chat
     },
     {
       path: "/contact",

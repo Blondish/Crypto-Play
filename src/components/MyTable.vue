@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="font-weight-medium mytable">
     <v-data-table
       :headers="headers"
       @click:row="getCrypto"
@@ -19,6 +19,7 @@ export default {
 
   data() {
     return {
+      props: ["searchInput"],
       headers: [
         { text: "Rank", value: "cmc_rank" },
         {
@@ -76,6 +77,11 @@ export default {
           this.tabledata[i].quote.USD.market_cap.toString().slice(0, 3) + "B";
       }
       return newData;
+    },
+    fiteredCrypto() {
+      return this.tabledata.filter(crypto =>
+        crypto.name.toUpperCase().includes(this.searchInput.toUpperCase())
+      );
     }
   },
   created() {
@@ -84,5 +90,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+>>> .theme--light.v-data-table thead tr th {
+  color: black;
+}
+.mytable {
+  margin-top: 30px;
+}
 </style>

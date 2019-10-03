@@ -1,11 +1,11 @@
 <template>
-  <div class="research">
-    <h1>This is the research page</h1>
+  <div class="chat">
+    <h2>Please log in to send a message</h2>
   </div>
 </template>
 <script>
 export default {
-  name: "research",
+  name: "chat",
   props: {
     msg: String
   }

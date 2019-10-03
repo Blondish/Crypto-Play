@@ -1,7 +1,14 @@
 <template>
   <div class="home">
     <div class="search">
-      <v-btn block centered type="text">
+      <v-btn
+        block
+        centered
+        type="text"
+        v-model="value"
+        v-on:keyup="sendInputValue"
+        placeholder="Search"
+      >
         <v-icon left>mdi-magnify</v-icon>
       </v-btn>
     </div>
@@ -14,7 +21,17 @@
 <script>
 import MyTable from "@/components/MyTable.vue";
 export default {
-  components: { MyTable }
+  components: { MyTable },
+  data() {
+    return {
+      value: ""
+    };
+  },
+  methods: {
+    sendInputValue() {
+      this.$emit("headerToApp", this.value);
+    }
+  }
 };
 </script>
 
