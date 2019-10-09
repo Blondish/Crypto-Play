@@ -12,14 +12,13 @@
 </template>
 
 <script>
-import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
   name: "MyTable",
 
   data() {
     return {
-      props: ["searchInput"],
       headers: [
         { text: "Rank", value: "cmc_rank" },
         {
@@ -32,60 +31,36 @@ export default {
         { text: "% Change", value: "quote[USD][percent_change_24h]" },
 
         { text: "Market Cap", value: "quote[USD][market_cap]", sortable: false }
-      ],
-      tabledata: []
+      ]
     };
   },
   methods: {
     getCrypto(item) {
       console.log(item.id);
       this.$router.replace("/cryptoitem/" + item.id);
-    },
-    getData() {
-      const proxyurl = "https://cors-anywhere.herokuapp.com/";
-      axios
-        .get(
-          proxyurl +
-            "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
-          {
-            headers: {
-              "X-CMC_PRO_API_KEY": "e1eb1f30-5c4e-43aa-be04-4b50df00807a"
-            }
-          }
-        )
-        .then(response => {
-          console.log(response);
-          this.tabledata = response.data.data;
-        })
-        .catch(function(err) {
-          console.log(err);
-        });
     }
   },
   computed: {
+    ...mapGetters(["allCryptos", "getSearch"]),
     fixedDecimals() {
-      let newData = Array.from(this.tabledata);
-      for (var i = 0; i < this.tabledata.length; i++) {
-        newData[i].quote.USD.price = this.tabledata[i].quote.USD.price.toFixed(
-          2
-        );
-        newData[i].quote.USD.percent_change_24h = this.tabledata[
+      console.log(this.allCryptos);
+      let cryptos = this.allCryptos.filter(coin =>
+        coin.name.toLowerCase().includes(this.getSearch.toLowerCase())
+      );
+      console.log(cryptos);
+
+      let newData = Array.from(cryptos);
+      for (var i = 0; i < cryptos.length; i++) {
+        newData[i].quote.USD.price = +cryptos[i].quote.USD.price.toFixed(2);
+        newData[i].quote.USD.percent_change_24h = +cryptos[
           i
         ].quote.USD.percent_change_24h.toFixed(2);
 
         newData[i].quote.USD.market_cap =
-          this.tabledata[i].quote.USD.market_cap.toString().slice(0, 3) + "B";
+          +cryptos[i].quote.USD.market_cap.toString().slice(0, 3) + "B";
       }
       return newData;
-    },
-    fiteredCrypto() {
-      return this.tabledata.filter(crypto =>
-        crypto.name.toUpperCase().includes(this.searchInput.toUpperCase())
-      );
     }
-  },
-  created() {
-    this.getData();
   }
 };
 </script>

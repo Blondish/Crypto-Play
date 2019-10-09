@@ -15,9 +15,7 @@ import MyFooter from "@/components/MyFooter";
 export default {
   name: "App",
   components: { Navbar, MyFooter },
-  data: () => ({
-    //
-  })
+  data: () => ({})
 };
 </script>
 

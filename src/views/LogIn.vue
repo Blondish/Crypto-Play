@@ -1,13 +1,10 @@
 <template>
   <div>
     <v-container class="container">
-      <h3>Please Log in to Chat</h3>
+      <h2>Please Log in to Chat</h2>
       <v-row sm-6 xs-12 justify="space-around" align="center">
         <v-col>
-          <v-btn @click="login">Login</v-btn>
-        </v-col>
-        <v-col>
-          <v-btn @click="logOut">LogOut</v-btn>
+          <v-btn @click="login" v-show="logInVisible">Login</v-btn>
         </v-col>
       </v-row>
       <v-row xs-12 block>
@@ -21,7 +18,10 @@
           <v-btn @click="sendMessage">Send</v-btn>
         </v-col>
       </v-row>
-      <div v-bind="showError"></div>
+      <v-col>
+        <v-btn @click="logOut" v-show="logOutVisible">LogOut</v-btn>
+      </v-col>
+
       <v-row xs-12>
         <div v-for="message in messages" :key="message.id">
           <v-col>
@@ -41,7 +41,9 @@ export default {
     return {
       logged: false,
       message: "",
-      messages: []
+      messages: [],
+      logInVisible: true,
+      logOutVisible: false
     };
   },
   methods: {
@@ -53,6 +55,8 @@ export default {
         .then(user => {
           console.log(user);
           this.logged = true;
+          this.logInVisible = false;
+          this.logOutVisible = true;
           this.getMessages();
         })
         .catch(err => alert(err));
@@ -61,8 +65,12 @@ export default {
       firebase
         .auth()
         .signOut()
-        .then(function() {
-          console.log("you logged out");
+        .then(user => {
+          this.logged = false;
+          this.logInVisible = true;
+          this.logOutVisible = false;
+          this.messages = [];
+          this.message = "";
         })
         .catch(function(error) {
           console.log(error);
@@ -81,7 +89,9 @@ export default {
     },
     sendMessage() {
       if (this.logged == false) {
-        alert("you are not logged in");
+        alert("You are not logged in");
+      } else if (this.logged == true && this.message.length == 0) {
+        alert("write your sessage");
       }
       console.log(firebase.auth().currentUser);
       let obj = {
@@ -93,8 +103,8 @@ export default {
         .database()
         .ref("chat")
         .push(obj);
-    },
-    showError() {}
+      this.message = "";
+    }
   }
 };
 </script>
