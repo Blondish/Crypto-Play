@@ -34,6 +34,7 @@
           >$ {{ cryptoFromTable.quote.USD.price }}</div>
         </v-col>
       </v-row>
+      <div v-if="loading" id="spinner"></div>
       <MyChart
         v-if="singleCrypto[id] && cryptoFromTable.quote"
         :singleCrypto="singleCrypto"
@@ -94,7 +95,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["singleCrypto", "allCryptos"]),
+    ...mapGetters(["singleCrypto", "allCryptos", "loading"]),
     cryptoFromTable() {
       return this.allCryptos.find(crypto => crypto.id == this.id);
     }
@@ -159,5 +160,28 @@ select {
 a {
   text-decoration: none;
   color: red;
+}
+/* SPINNER */
+#spinner {
+  visibility: visible;
+  width: 80px;
+  height: 80px;
+  border: 2px solid #f3f3f3;
+  border-top: 3px solid #f25a41;
+  border-radius: 100%;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  animation: spin 1s infinite linear;
+}
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

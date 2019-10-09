@@ -13,10 +13,10 @@
 
 <script>
 import { mapGetters } from "vuex";
+import { loadavg } from "os";
 
 export default {
   name: "MyTable",
-
   data() {
     return {
       headers: [
@@ -43,11 +43,9 @@ export default {
   computed: {
     ...mapGetters(["allCryptos", "getSearch"]),
     fixedDecimals() {
-      console.log(this.allCryptos);
       let cryptos = this.allCryptos.filter(coin =>
         coin.name.toLowerCase().includes(this.getSearch.toLowerCase())
       );
-      console.log(cryptos);
 
       let newData = Array.from(cryptos);
       for (var i = 0; i < cryptos.length; i++) {
