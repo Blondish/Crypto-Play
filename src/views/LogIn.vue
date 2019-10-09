@@ -1,13 +1,23 @@
 <template>
   <div>
     <v-container class="container">
-      <h2>Please Log in to Chat</h2>
+      <h2>Your Account</h2>
       <v-row sm-6 xs-12 justify="space-around" align="center">
         <v-col>
           <v-btn @click="login" v-show="logInVisible">Login</v-btn>
         </v-col>
       </v-row>
-
+      <v-row xs-12 block>
+        <v-col>
+          Message
+          <input v-model="message" type="text" placeholder="enter message" />
+        </v-col>
+      </v-row>
+      <v-row xs-12>
+        <v-col>
+          <v-btn @click="sendMessage">Send</v-btn>
+        </v-col>
+      </v-row>
       <v-col>
         <v-btn @click="logOut" v-show="logOutVisible">LogOut</v-btn>
       </v-col>
@@ -21,17 +31,6 @@
           </v-col>
         </div>
       </div>
-      <v-row xs-12 block>
-        <v-col>
-          Message
-          <input v-model="message" type="text" placeholder="enter message" />
-        </v-col>
-      </v-row>
-      <v-row xs-12>
-        <v-col>
-          <v-btn @click="sendMessage">Send</v-btn>
-        </v-col>
-      </v-row>
     </v-container>
   </div>
 </template>
@@ -54,7 +53,8 @@ export default {
       messages: [],
       logInVisible: true,
       logOutVisible: false,
-      loading: false
+      loading: false,
+      today: moment()
     };
   },
   methods: {
@@ -101,6 +101,7 @@ export default {
     sendMessage() {
       if (this.logged == false) {
         alert("You are not logged in");
+        this.message = "";
       } else if (this.logged == true && this.message.length == 0) {
         alert("write your sessage");
         return;
@@ -111,7 +112,6 @@ export default {
         name: firebase.auth().currentUser.displayName,
         foto: firebase.auth().currentUser.photoURL
       };
-      console.log(moment);
       firebase
         .database()
         .ref("chat")
