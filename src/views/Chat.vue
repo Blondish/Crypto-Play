@@ -1,10 +1,10 @@
 <template>
   <div class="chat">
     <v-container class="container">
-      <h2>Crypto Chatroom</h2>
+      <h1 class="font-italic font-weight-medium">Crypto Chatroom</h1>
       <v-row sm-6 xs-12 justify="space-around" align="center">
         <v-col>
-          <v-btn raised @click="redirectToLog">Login</v-btn>
+          <v-btn elevation="5" @click="redirectToLog">Login</v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -33,8 +33,8 @@ export default {
 };
 </script>
 <style scoped>
-h2 {
-  margin-top: 50px;
+h1 {
+  margin-top: 30px;
   margin-bottom: 20px;
 }
 p {

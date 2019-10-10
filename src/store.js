@@ -8,7 +8,8 @@ const state = {
   cryptodata: [],
   singleCrypto: {},
   search: "",
-  loading: false
+  loading: false,
+  logged: false
 };
 
 const getters = {
@@ -24,11 +25,13 @@ const getters = {
     }
   },
   getSearch: state => state.search,
-  loading: state => state.loading
+  loading: state => state.loading,
+  logged: state => state.logged
 };
 const actions = {
   getData({ commit }) {
     commit("setLoading", true);
+
     const proxyurl = "https://cors-anywhere.herokuapp.com/";
     axios
       .get(
@@ -84,7 +87,8 @@ const mutations = {
   setCryptos: (state, payload) => (state.cryptodata = payload),
   setSingleCrypto: (state, payload) => (state.singleCrypto = payload),
   search: (state, payload) => (state.search = payload),
-  setLoading: (state, payload) => (state.loading = payload)
+  setLoading: (state, payload) => (state.loading = payload),
+  logged: (state, payload) => (state.logged = payload)
 };
 
 export default new Vuex.Store({

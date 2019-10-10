@@ -28,5 +28,12 @@ new Vue({
     };
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+        store.commit("logged", true);
+      } else {
+        store.commit("logged", false);
+      }
+    });
   }
 }).$mount("#app");

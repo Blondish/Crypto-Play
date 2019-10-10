@@ -1,7 +1,7 @@
 <template>
   <div class="contact">
     <v-content v-show="hideOnSubmit">
-      <h1>Get In Touch</h1>
+      <h1 class="font-italic font-weight-medium">Get In Touch</h1>
 
       <v-form ref="form" lazy-validation>
         <v-text-field :rules="nameRules" label="Name"></v-text-field>

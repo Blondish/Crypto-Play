@@ -5,7 +5,7 @@
       <input id="search" type="search" required v-model="keyword" />
       <label class="label-icon" for="search"></label>
     </div>
-    <h2>Top Ranked Cryptos</h2>
+    <h1 class="font-italic font-weight-bold">Top Ranked Cryptos</h1>
     <div v-if="loading" id="spinner"></div>
     <MyTable />
   </div>
@@ -52,12 +52,12 @@ export default {
 
 <style scoped>
 #search {
-  border: 1px solid greenyellow;
+  border: 1px solid rgb(73, 78, 64);
   width: 40%;
   padding: 2px 10px;
   margin: 20px auto 10px;
 }
-h2 {
+h1 {
   margin: 10px 0;
 }
 .home {

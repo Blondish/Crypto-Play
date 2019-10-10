@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h2>The History of Cryptocurrency</h2>
+    <h2 class="font-italic font-weight-medium">The History of Cryptocurrency</h2>
     <p>
       A cryptocurrency (or crypto currency) is a digital asset designed to work as a medium of exchange that
       uses strong cryptography to secure financial transactions, control the creation of additional units, and verify the
@@ -10,7 +10,7 @@
       Bitcoin, first released as open-source software in 2009, is generally considered the first decentralized cryptocurrency.
       Since the release of bitcoin, over 4,000 altcoins (alternative variants of bitcoin, or other cryptocurrencies) have been created.
     </p>
-    <h2>Arcitecture</h2>
+    <h2 class="font-italic font-weight-medium">Arcitecture</h2>
     <p>
       Decentralized cryptocurrency is produced by the entire cryptocurrency system collectively, at a rate which is defined
       when the system is created and which is publicly known. In centralized banking and economic systems such as the Federal Reserve
@@ -26,7 +26,7 @@
       institutions or kept as cash on hand, cryptocurrencies can be more difficult for seizure by law enforcement. This difficulty is
       derived from leveraging cryptographic technologies.
     </p>
-    <h2>Mining</h2>
+    <h2 class="font-italic font-weight-medium">Mining</h2>
     <p>
       In cryptocurrency networks, mining is a validation of transactions. For this effort, successful miners obtain new cryptocurrency
       as a reward. The reward decreases transaction fees by creating a complementary incentive to contribute to the processing power of
@@ -40,11 +40,10 @@
       network to split the reward equally, according to the amount of work they contributed to the probability of finding a block.
       A "share" is awarded to members of the mining pool who present a valid partial proof-of-work.
     </p>
-    <h2>More Information</h2>
-    <a
-      href="https://en.wikipedia.org/wiki/Cryptocurrency"
-      target="_blank"
-    >Refer to this page for more information</a>
+
+    <a href="https://en.wikipedia.org/wiki/Cryptocurrency" target="_blank">
+      <h2>Read More...</h2>
+    </a>
   </div>
 </template>
 
@@ -71,7 +70,7 @@ h2 {
 }
 .about a {
   text-decoration: none;
-  color: red;
+  color: black;
 }
 .about a:hover {
   text-decoration: underline;

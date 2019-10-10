@@ -10,7 +10,10 @@
           </router-link>
         </v-col>
         <v-col xs-8>
-          <div class="title" v-if="singleCrypto[id]">{{singleCrypto[id].name}}</div>
+          <div
+            class="title font-italic font-weight-bold"
+            v-if="singleCrypto[id]"
+          >{{singleCrypto[id].name}}</div>
           <div class="title" v-if="singleCrypto[id]">{{singleCrypto[id].symbol}}</div>
           <img v-if="singleCrypto[id]" v-bind:src="singleCrypto[id].logo" />
         </v-col>
@@ -29,7 +32,7 @@
       <v-row>
         <v-col xs-12>
           <div
-            class="font-weight-bold"
+            class="title font-weight-bold"
             v-if="cryptoFromTable.quote"
           >$ {{ cryptoFromTable.quote.USD.price }}</div>
         </v-col>
@@ -61,21 +64,24 @@
             v-if="singleCrypto[id]"
             v-bind:href="singleCrypto[id].urls.website"
             target="_blank"
-          >Website</a>
+            class="font-italic font-weight-medium"
+          >WEBSITE</a>
         </v-col>
         <v-col xs-4>
           <a
             v-if="singleCrypto[id]"
             v-bind:href="singleCrypto[id].urls.reddit"
             target="_blank"
-          >Reddit Page</a>
+            class="font-italic font-weight-medium"
+          >REDDIT</a>
         </v-col>
         <v-col xs-4>
           <a
             v-if="singleCrypto[id]"
             v-bind:href="singleCrypto[id].urls.twitter"
             target="_blank"
-          >Twitter Page</a>
+            class="font-italic font-weight-medium"
+          >TWITTER</a>
         </v-col>
       </v-row>
     </v-container>
@@ -102,50 +108,6 @@ export default {
   },
   methods: {
     ...mapActions(["getSingleCrypto"])
-    // getData() {
-    //   const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    //   axios
-    //     .get(
-    //       proxyurl +
-    //         "https://pro-api.coinmarketcap.com/v1/cryptocurrency/info?id=" +
-    //         this.id,
-    //       {
-    //         headers: {
-    //           "X-CMC_PRO_API_KEY": "e1eb1f30-5c4e-43aa-be04-4b50df00807a"
-    //         }
-    //       }
-    //     )
-    //     .then(response => {
-    //       console.log(response);
-    //       this.cryptodata = response.data;
-    //       console.log(this.cryptodata);
-    //     })
-    //     .catch(function(err) {
-    //       console.log(err);
-    //     });
-    // }
-
-    // cryptoInfo() {
-    //   const proxyurl = "https://cors-anywhere.herokuapp.com/";
-    //   axios
-    //     .get(
-    //       proxyurl +
-    //         "https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest",
-    //       {
-    //         headers: {
-    //           "X-CMC_PRO_API_KEY": "e1eb1f30-5c4e-43aa-be04-4b50df00807a"
-    //         }
-    //       }
-    //     )
-    //     .then(response => {
-    //       console.log(response);
-    //       let info = response.data.data;
-    //       this.cryptoFromTable = info.find(crypto => crypto.id == this.id);
-    //     })
-    //     .catch(function(err) {
-    //       console.log(err);
-    //     });
-    // }
   },
   created() {
     this.getSingleCrypto(this.id);
@@ -157,9 +119,10 @@ export default {
 select {
   border: none;
 }
-a {
+div a {
   text-decoration: none;
-  color: red;
+  color: black;
+  font-size: bold;
 }
 /* SPINNER */
 #spinner {
