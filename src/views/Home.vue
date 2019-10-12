@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div>
-      <v-icon left>mdi-magnify</v-icon>
+      <v-icon left dark>mdi-magnify</v-icon>
       <input id="search" type="search" required v-model="keyword" />
       <label class="label-icon" for="search"></label>
     </div>
@@ -52,7 +52,7 @@ export default {
 
 <style scoped>
 #search {
-  border: 1px solid rgb(73, 78, 64);
+  border: 1px solid white;
   width: 40%;
   padding: 2px 10px;
   margin: 20px auto 10px;
@@ -60,20 +60,14 @@ export default {
 h1 {
   margin: 10px 0;
 }
-.home {
-  background: url("/assets/photo-1518483239595-6f1f9e80b7c7.jpeg");
-  background-size: cover;
-  background-repeat: no-repeat;
-  height: 400px;
-  width: auto;
-}
+
 /* SPINNER */
 #spinner {
   visibility: visible;
   width: 80px;
   height: 80px;
   border: 2px solid #f3f3f3;
-  border-top: 3px solid #f25a41;
+  border-top: 3px solid #cffcfc;
   border-radius: 100%;
   top: 0;
   bottom: 0;

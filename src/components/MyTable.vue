@@ -4,8 +4,8 @@
       :headers="headers"
       @click:row="getCrypto"
       :items="fixedDecimals"
-      :items-per-page="10"
-      :mobile-breakpoint="0"
+      :items-per-page="5"
+      :mobile-breakpoint="500"
       class="elevation-1"
     ></v-data-table>
   </div>
@@ -66,8 +66,17 @@ export default {
 <style scoped>
 >>> .theme--light.v-data-table thead tr th {
   color: black;
+  font-weight: 400;
 }
 .mytable {
   margin-top: 30px;
+  width: 100%;
+  padding: 10px;
+  opacity: 0.6;
+
+  color: white !important;
+}
+.v-data-table td {
+  font-size: 1.2em;
 }
 </style>

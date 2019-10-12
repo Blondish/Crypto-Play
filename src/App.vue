@@ -21,6 +21,14 @@ export default {
 
 <style>
 #app {
+  color: white;
   text-align: center;
+  background: url("./assets/newimage2.jpg") fixed;
+  background-color: #cccccc;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 100%;
+  width: 100%;
 }
 </style>

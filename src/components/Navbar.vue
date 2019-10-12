@@ -1,10 +1,11 @@
 <template>
   <div>
-    <v-app-bar app light class="green lighten-4">
+    <v-app-bar app class="navbar">
       <v-toolbar-title>
         <router-link :to="titlelink.route">
           <div>
-            <img class="logo" src="../assets/cryptologo.png" alt="cryptologo" srcset />
+            <!--<img class="logo" src="../assets/cryptologo.png" alt="cryptologo" srcset />-->
+            <h4>{{ titlelink.text}}</h4>
           </div>
         </router-link>
       </v-toolbar-title>
@@ -37,7 +38,7 @@ export default {
   name: "Navbar",
   data() {
     return {
-      titlelink: { text: "CryptoPlay", route: "/" },
+      titlelink: { text: "CRYPTO$PLAY", route: "/" },
       loginlink: { route: "/login" },
       links: [
         { text: "About", route: "/about", icon: "mdi-information" },
@@ -59,5 +60,15 @@ img {
   font-weight: 800;
   font-size: 1.2em;
   font-stretch: expanded;
+  color: #052f47;
+}
+.navbar {
+  background-color: #cffcfc !important;
+  opacity: 0.8;
+}
+h4,
+a {
+  text-decoration: none !important;
+  color: #052f47;
 }
 </style>

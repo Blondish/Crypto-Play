@@ -40,4 +40,10 @@ h1 {
 p {
   font-size: 1.2em;
 }
+.theme--light.v-input:not(.v-input--is-disabled) input,
+.theme--light.v-input:not(.v-input--is-disabled) textarea,
+.theme--light.v-label,
+.theme--light.v-input--selection-controls__input {
+  color: white !important;
+}
 </style>

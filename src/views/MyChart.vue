@@ -44,7 +44,7 @@ export default {
         datasets: [
           {
             label: this.name,
-            backgroundColor: "#f87979",
+            backgroundColor: "#cffcfc",
             data: [this.price7d, this.price24h, this.price1h, this.priceNow]
           }
         ]

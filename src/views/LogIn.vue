@@ -188,6 +188,7 @@ img {
   margin: 3px;
   list-style: none;
   padding: 10px;
+  word-break: break-all;
 }
 /* SPINNER */
 #spinner {
@@ -195,7 +196,7 @@ img {
   width: 80px;
   height: 80px;
   border: 2px solid #f3f3f3;
-  border-top: 3px solid #f25a41;
+  border-top: 3px solid #cffcfc;
   border-radius: 100%;
   top: 0;
   bottom: 0;
