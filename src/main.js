@@ -18,7 +18,7 @@ new Vue({
   render: h => h(App),
   created() {
     var firebaseConfig = {
-      apiKey: "AIzaSyDGEWppLqEWkVYJ53FX7AJD7cJfAIXUkRI",
+      apiKey: "",
       authDomain: "cryptoapp-1a543.firebaseapp.com",
       databaseURL: "https://cryptoapp-1a543.firebaseio.com",
       projectId: "cryptoapp-1a543",
