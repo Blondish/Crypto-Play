@@ -39,7 +39,7 @@
       </v-row>
       <div v-if="loading" id="spinner"></div>
       <MyChart
-        dark
+        light
         v-if="singleCrypto[id] && cryptoFromTable.quote"
         :singleCrypto="singleCrypto"
         :id="id"

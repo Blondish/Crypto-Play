@@ -4,7 +4,7 @@
       <h1 class="font-italic font-weight-medium">Crypto Chatroom</h1>
       <v-row sm-6 xs-12 justify="space-around" align="center">
         <v-col>
-          <v-btn elevation="5" @click="redirectToLog">Login</v-btn>
+          <v-btn elevation="5" @click="login">Login</v-btn>
         </v-col>
       </v-row>
       <v-row>
@@ -19,7 +19,11 @@
     </v-container>
   </div>
 </template>
+
+
 <script>
+import firebase from "firebase";
+
 export default {
   name: "chat",
   props: {
@@ -28,6 +32,22 @@ export default {
   methods: {
     redirectToLog() {
       this.$router.push({ name: "login" });
+    },
+    login() {
+      this.loading = true;
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase
+        .auth()
+        .signInWithPopup(provider)
+        .then(user => {
+          console.log(user);
+          this.$store.commit("logged", true);
+          this.$router.push({ name: "login" });
+        })
+        .catch(err => {
+          alert(err);
+          this.loading = false;
+        });
     }
   }
 };

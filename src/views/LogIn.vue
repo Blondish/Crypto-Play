@@ -1,23 +1,12 @@
 <template>
   <div>
     <v-container class="container">
-      <h1 class="font-italic font-weight-medium">Your Account</h1>
-      <v-row sm-6 xs-12 justify="space-around" align="center">
+      <v-row sm-6 xs-12 align="center">
         <v-col>
           <v-btn @click="login" v-show="!logged" class="elevation-5">Login</v-btn>
         </v-col>
       </v-row>
-      <v-row v-if="logged" xs-12 block>
-        <v-col>
-          Message
-          <input v-model="message" type="text" placeholder="enter message" />
-        </v-col>
-      </v-row>
-      <v-row xs-12>
-        <v-col>
-          <v-btn v-if="logged" @click="sendMessage" class="elevation-5" large>Send</v-btn>
-        </v-col>
-      </v-row>
+
       <v-col>
         <v-btn @click="logOut" v-if="logged" class="elevation-5">LogOut</v-btn>
       </v-col>
@@ -25,11 +14,24 @@
       <div v-if="logged" class="chatroom" v-chat-scroll="{always: false, smooth: true}">
         <div v-if="loading" id="spinner"></div>
         <div class="message" v-for="message in messages" :key="message.id">
-          <v-col>
+          <v-col class="bubble right">
             <img :src="message.foto" alt="profile" width="25px" rounded />
-            {{ message.name}} {{message.text}} {{ message.currentdate}}
+            <p class="name">{{ message.name}}</p>
+            <span>{{ message.currentdate}}</span>
+            <p class="text">{{message.text}}</p>
           </v-col>
         </div>
+      </div>
+
+      <div class="form" v-if="logged">
+        <input v-model="message" type="text" placeholder="enter message" justify="space-around" />
+        <v-btn
+          v-if="logged"
+          @click="sendMessage"
+          class="elevation-5"
+          large
+          justify="space-around"
+        >Send</v-btn>
       </div>
     </v-container>
   </div>
@@ -159,37 +161,71 @@ export default {
 
 <style scoped>
 .container {
-  margin: 10px auto;
+  position: absolute;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
+  padding: 0;
 }
+
+.form {
+  display: flex;
+  padding-right: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  position: fixed;
+  bottom: 0;
+  /* background-color: white; */
+  width: 100%;
+}
+.form > input[type="text"] {
+  flex: 1 1 auto;
+  border: 1px solid #695c5c;
+
+  background-color: white;
+  color: #695c5c;
+}
+
 input {
-  margin: 10px;
-  padding: 10px;
-  border: 1px solid rgb(73, 78, 64);
-  border-radius: 5%;
+  border: 1px solid white;
+  padding: 5px;
 }
 img {
   border-radius: 50%;
+  margin-right: 5px;
 }
 
 .chatroom {
-  height: 300px;
+  height: 500px;
   width: auto;
   border: 1px solid none;
   margin-top: 10px;
-  padding: 10px 20px 5px 10px;
   overflow-y: auto;
 }
 
 .message {
   width: auto;
-  border: 1px solid rgb(73, 78, 64);
+  border: 1px solid white;
   border-radius: 20px;
   margin: auto;
   margin: 3px;
   list-style: none;
-  padding: 10px;
   word-break: break-all;
 }
+
+p.name {
+  font-size: 1.3em;
+  display: inline;
+  margin-right: 5px;
+}
+p.text {
+  display: block;
+}
+
+/* transition: background-color 0.5s; */
+
+/*position: relative;*/
+
 /* SPINNER */
 #spinner {
   visibility: visible;
