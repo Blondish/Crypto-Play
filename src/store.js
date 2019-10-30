@@ -9,7 +9,8 @@ const state = {
   singleCrypto: {},
   search: "",
   loading: false,
-  logged: false
+  logged: false,
+  chat: []
 };
 
 const getters = {
@@ -26,7 +27,8 @@ const getters = {
   },
   getSearch: state => state.search,
   loading: state => state.loading,
-  logged: state => state.logged
+  logged: state => state.logged,
+  chat: state => state.chat
 };
 const actions = {
   getData({ commit }) {
@@ -81,6 +83,9 @@ const actions = {
     console.log();
 
     commit("search", payload);
+  },
+  setMessages({ commit }, payload) {
+    commit("setMessages", payload);
   }
 };
 const mutations = {
@@ -88,7 +93,8 @@ const mutations = {
   setSingleCrypto: (state, payload) => (state.singleCrypto = payload),
   search: (state, payload) => (state.search = payload),
   setLoading: (state, payload) => (state.loading = payload),
-  logged: (state, payload) => (state.logged = payload)
+  logged: (state, payload) => (state.logged = payload),
+  setMessages: (state, payload) => (state.chat = payload)
 };
 
 export default new Vuex.Store({

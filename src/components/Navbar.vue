@@ -23,29 +23,50 @@
       </template>
       <div class="flex-grow-1"></div>
       <template>
-        <router-link :to="loginlink.route" tag="v-btn">
-          <v-btn icon>
-            <v-icon>mdi-account-circle</v-icon>
+        <router-link v-if="logged" :to="loginlink.route" tag="v-btn">
+          <v-btn v-if="logged" @click="logOut" icon>
+            <v-icon>mdi-logout-variant</v-icon>
           </v-btn>
         </router-link>
+        <!-- <router-link v-else :to="links[1].route" tag="v-btn"></router-link> -->
       </template>
     </v-app-bar>
   </div>
 </template>
 
 <script>
+import firebase from "firebase";
+import { mapGetters } from "vuex";
 export default {
   name: "Navbar",
   data() {
     return {
+      // logged: false,
       titlelink: { text: "CRYPTO$PLAY", route: "/" },
       loginlink: { route: "/login" },
       links: [
         { text: "About", route: "/about", icon: "mdi-information" },
-        { text: "Chat", route: "/chat", icon: "mdi-chat-processing" },
+        { text: "Chat", route: "/login", icon: "mdi-chat-processing" },
         { text: "Contact", route: "/contact", icon: "mdi-phone" }
       ]
     };
+  },
+  methods: {
+    logOut() {
+      firebase
+        .auth()
+        .signOut()
+        .then(user => {
+          this.$store.commit("logged", false);
+          this.$router.push("/login");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+    }
+  },
+  computed: {
+    ...mapGetters(["logged"])
   }
 };
 </script>

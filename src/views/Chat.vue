@@ -23,6 +23,8 @@
 
 <script>
 import firebase from "firebase";
+import { mapGetters } from "vuex";
+import { mapSetters } from "vuex";
 
 export default {
   name: "chat",
@@ -43,12 +45,28 @@ export default {
           console.log(user);
           this.$store.commit("logged", true);
           this.$router.push({ name: "login" });
+          this.getMessages();
         })
         .catch(err => {
           alert(err);
           this.loading = false;
         });
+    },
+    getMessages() {
+      this.loading = true;
+      firebase
+        .database()
+        .ref("chat")
+        .on("value", data => {
+          this.messages = data.val();
+          this.$store.dispatch("setMessages", data.val());
+          this.loading = false;
+        });
+      console.log("gfgfgf");
     }
+  },
+  computed: {
+    ...mapGetters(["logged", "chat"])
   }
 };
 </script>

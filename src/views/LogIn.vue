@@ -1,61 +1,91 @@
 <template>
   <div>
-    <v-container class="container">
-      <v-row sm-6 xs-12 align="center">
-        <v-col>
-          <v-btn @click="login" v-show="!logged" class="elevation-5">Login</v-btn>
-        </v-col>
-      </v-row>
-
-      <v-col>
-        <v-btn @click="logOut" v-if="logged" class="elevation-5">LogOut</v-btn>
-      </v-col>
-
-      <div v-if="logged" class="chatroom" v-chat-scroll="{always: false, smooth: true}">
-        <div v-if="loading" id="spinner"></div>
-        <div class="message" v-for="message in messages" :key="message.id">
-          <v-col class="bubble right">
-            <img :src="message.foto" alt="profile" width="25px" rounded />
-            <p class="name">{{ message.name}}</p>
-            <span>{{ message.currentdate}}</span>
-            <p class="text">{{message.text}}</p>
+    <div class="chat">
+      <v-container class="container" v-show="!logged">
+        <h1 class="font-italic font-weight-medium">Crypto Chatroom</h1>
+        <v-row sm-6 xs-12 justify="space-around" align="center">
+          <v-col>
+            <v-btn elevation="5" @click="login">Login</v-btn>
           </v-col>
-        </div>
-      </div>
+        </v-row>
+        <v-row>
+          <v-col>
+            <p>
+              Would you like to connect to other traders of cryptocurrency?
+              Have ideas or questions regarding mining of cryptos or architecture of the industry?
+            </p>
+            <p>Our secure chat gives you access to thousands of cryptolovers just like you!</p>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
+    <!-- <v-container> -->
+    <!-- <v-row sm-6 xs-12 align="center">
+      <v-col v-show="!logged">
+        <v-btn @click="login" class="elevation-5">Login</v-btn>
+        <h1 class="font-italic font-weight-medium">Crypto Chatroom</h1>
+        <v-row>
+          <v-col>
+            <p>
+              Would you like to connect to other traders of cryptocurrency?
+              Have ideas or questions regarding mining of cryptos or architecture of the industry?
+            </p>
+            <p>Our secure chat gives you access to thousands of cryptolovers just like you!</p>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>-->
 
-      <div class="form" v-if="logged">
-        <input v-model="message" type="text" placeholder="enter message" justify="space-around" />
-        <v-btn
-          v-if="logged"
-          @click="sendMessage"
-          class="elevation-5"
-          large
-          justify="space-around"
-        >Send</v-btn>
+    <!-- <v-col>
+      <v-btn @click="logOut" v-if="logged" class="elevation-5">LogOut</v-btn>
+    </v-col>-->
+
+    <div v-if="logged" class="chatroom" v-chat-scroll="{always: false, smooth: true}">
+      <div v-if="loading" id="spinner"></div>
+      <div class="message" v-for="message in messages" :key="message.id">
+        <v-col class="bubble right">
+          <img :src="message.foto" alt="profile" width="25px" rounded />
+          <p class="name">{{ message.name}}</p>
+          <span>{{ message.currentdate}}</span>
+          <p class="text">{{message.text}}</p>
+        </v-col>
       </div>
-    </v-container>
+    </div>
+
+    <div class="form" v-if="logged">
+      <input v-model="message" type="text" placeholder="enter message" justify="space-around" />
+      <v-btn
+        v-if="logged"
+        @click="sendMessage"
+        class="elevation-5"
+        large
+        justify="space-around"
+      >Send</v-btn>
+    </div>
+    <v-snackbar v-model="snackbar">
+      {{ text }}
+      <v-btn color="white" text @click="snackbar = false">Close</v-btn>
+    </v-snackbar>
+    <!-- </v-container> -->
   </div>
 </template>
 
 <script>
 import firebase from "firebase";
 import VueChatScroll from "vue-chat-scroll";
-import moment from "moment";
 
 import { mapGetters } from "vuex";
 
 export default {
   data() {
     return {
-      nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
-      ],
       //logged: false,
       message: "",
       messages: [],
       loading: false,
-      currentdate: ""
+      currentdate: "",
+      snackbar: false,
+      text: "Please enter your message"
     };
   },
   methods: {
@@ -92,6 +122,7 @@ export default {
         .then(user => {
           console.log(user);
           this.$store.commit("logged", true);
+          this.getMessages();
         })
         .catch(err => {
           alert(err);
@@ -106,6 +137,7 @@ export default {
           this.$store.commit("logged", false);
           this.messages = [];
           this.message = "";
+          this.$router.push("/login");
         })
         .catch(function(error) {
           console.log(error);
@@ -120,15 +152,16 @@ export default {
           this.messages = data.val();
           this.loading = false;
         });
+      console.log("gfgfgf");
     },
 
     sendMessage() {
       if (this.logged == false) {
-        alert("You are not logged in");
+        alert("you are not logged in");
         this.message = "";
         return;
       } else if (this.logged == true && this.message.length == 0) {
-        alert("write your message");
+        this.snackbar = true;
         return;
       }
       this.getDate();
@@ -149,17 +182,31 @@ export default {
   computed: {
     ...mapGetters(["logged"])
   },
-  watch: {
-    logged: function(value) {
-      if (value) {
-        this.getMessages();
-      }
-    }
+  // watch: {
+  //   logged: function(value) {
+  //     if (value) {
+  //       console.log(value);
+  //       this.getMessages();
+  //     } else {
+  //       this.messages = [];
+  //       this.message = "";
+  //     }
+  //   }
+  // },
+  created() {
+    this.getMessages();
   }
 };
 </script>
 
 <style scoped>
+h1 {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+p {
+  font-size: 1.2em;
+}
 .container {
   position: absolute;
   background-attachment: fixed;
@@ -248,5 +295,9 @@ p.text {
   to {
     transform: rotate(360deg);
   }
+}
+
+.col {
+  padding: 0px !important;
 }
 </style>
